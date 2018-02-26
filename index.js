@@ -207,14 +207,8 @@ const validateRequest = (req, res, next) => {
       debug(`  Request validation errors: \n${util.inspect(validator.errors)}`);
       if (options.requestValidationFn) {
         options.requestValidationFn(req, req.body, validator.errors);
-        res.status(400).json(validator.errors);
-      } else {
-        const err = {
-          message: `Request schema validation failed for ${req.method}${req.originalUrl}`,
-        };
-        res.status(400);
-        res.json(err);
       }
+      res.status(400).json(validator.errors);
     } else {
       debug('Request validation success');
       if (options.validateResponse) {
